@@ -238,6 +238,7 @@ $(function() {
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
+    console.log(data.username);
     $('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').parent().remove();
     addChatMessage(data);
   });
