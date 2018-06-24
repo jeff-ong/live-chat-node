@@ -4,17 +4,27 @@ var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
 var io = require('./')(server);
+var session = require("express-session")({
+    secret: "my-secret",
+    resave: true,
+    saveUninitialized: true
+  })
+var sharedsession = require("express-socket.io-session");
 var port = process.env.PORT || 3000;
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
+// Attach session
+app.use(session);
+
+io.use(sharedsession(session));
+
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Chatroom
-
 var numUsers = 0;
 
 io.on('connection', (socket) => {
