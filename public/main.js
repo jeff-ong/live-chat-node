@@ -103,11 +103,6 @@ $(function() {
   const addChatTyping = (data) => {
     data.typing = true;
     data.message = 'is typing';
-
-    if ($('.messageBody').attr('data-uid') == data.username && $('.messageBody').text() =='is typing') {
-      return;
-    }
-
     addChatMessage(data);
   }
 
@@ -262,10 +257,10 @@ $(function() {
   // Whenever the server emits 'typing', show the typing message
   socket.on('typing', (data) => {
 
-    if ($('.username').text(data.username).length>0) {
-      $('.username').text(data.username).parent().remove();
-      return false;
+    if ($('.messageBody').attr('data-uid') == data.username && $('.messageBody').text() == 'is typing') {
+      return;
     }
+    
     addChatTyping(data);
   });
 
