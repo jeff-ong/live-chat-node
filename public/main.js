@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
   var FADE_TIME = 150; // ms
   var TYPING_TIMER_LENGTH = 400; // ms
   var COLORS = [
@@ -15,6 +15,7 @@ $(function() {
 
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
+  var $joinBtn = $('.join-chat');
 
   // Prompt for setting a username
   var username;
@@ -69,7 +70,7 @@ $(function() {
   }
 
   // Log a message
-    const log = (message, options) => {
+  const log = (message, options) => {
     var $el = $('<li>').addClass('log').text(message);
     addMessageElement($el, options);
   }
@@ -181,11 +182,21 @@ $(function() {
     // Compute hash code
     var hash = 7;
     for (var i = 0; i < username.length; i++) {
-       hash = username.charCodeAt(i) + (hash << 5) - hash;
+      hash = username.charCodeAt(i) + (hash << 5) - hash;
     }
     // Calculate color
     var index = Math.abs(hash % COLORS.length);
     return COLORS[index];
+  }
+
+  const join_chat = () => {
+    if (username) {
+      sendMessage();
+      socket.emit('stop typing');
+      typing = false;
+    } else {
+      setUsername();
+    }
   }
 
   // Keyboard events
@@ -197,13 +208,7 @@ $(function() {
     }
     // When the client hits ENTER on their keyboard
     if (event.which === 13) {
-      if (username) {
-        sendMessage();
-        socket.emit('stop typing');
-        typing = false;
-      } else {
-        setUsername();
-      }
+      join_chat();
     }
   });
 
@@ -223,6 +228,10 @@ $(function() {
     $inputMessage.focus();
   });
 
+  $joinBtn.click(() => {
+    join_chat();
+  });
+
   // Socket events
 
   // Whenever the server emits 'login', log the login message
@@ -238,7 +247,7 @@ $(function() {
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
-    $('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').parent().remove();
+    $('.messageBody[data-uid="' + data.username + '"]:contains("is typing")').parent().remove();
     addChatMessage(data);
   });
 
@@ -258,13 +267,13 @@ $(function() {
   // Whenever the server emits 'typing', show the typing message
   socket.on('typing', (data) => {
 
-    if ($('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').length>0) {
-      return ;
+    if ($('.messageBody[data-uid="' + data.username + '"]:contains("is typing")').length > 0) {
+      return;
     }
 
-    window.setTimeout(function(){
+    window.setTimeout(function () {
       $('.messageBody[data-uid="' + data.username + '"]:contains("is typing")').parent().fadeOut();
-    },3000);
+    }, 3000);
 
     addChatTyping(data);
   });

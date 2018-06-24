@@ -29,27 +29,23 @@ html, body {
 ul {
   list-style: none;
   word-wrap: break-word;
-}
-
-/* Pages */
-
-.pages {
-  height: 100%;
-  margin: 0;
   padding: 0;
-  width: 100%;
 }
 
 .page {
-  height: 100%;
-  position: absolute;
-  width: 100%;
+  display: block;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 }
 
+.pages {
+  margin: 0;
+}
 /* Login Page */
 
 .login.page {
-  background-color: #000;
+  background: linear-gradient(to bottom right, #7C3AC4, #311B92);
 }
 
 .login.page .form {
@@ -65,7 +61,7 @@ ul {
 .login.page .form .usernameInput {
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #fff;
+  border-bottom: 1px solid #fff;
   outline: none;
   padding-bottom: 15px;
   text-align: center;
@@ -147,3 +143,4 @@ ul {
   right: 0;
   width: 100%;
 }
+
