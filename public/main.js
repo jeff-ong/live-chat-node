@@ -238,6 +238,7 @@ $(function() {
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
+    $('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').parent().remove();
     addChatMessage(data);
   });
 
@@ -260,7 +261,7 @@ $(function() {
     if ($('.messageBody').attr('data-uid') == data.username && $('.messageBody').text() == 'is typing') {
       return;
     }
-    
+
     addChatTyping(data);
   });
 
