@@ -256,8 +256,12 @@ $(function() {
 
   // Whenever the server emits 'typing', show the typing message
   socket.on('typing', (data) => {
+
+    if ($('.username').text(data.username).length>0) {
+      $('.username').text(data.username).parent().remove();
+      return false;
+    }
     addChatTyping(data);
-    console.log(data)
   });
 
   // Whenever the server emits 'stop typing', kill the typing message
