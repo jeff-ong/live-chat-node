@@ -259,8 +259,8 @@ $(function() {
   // Whenever the server emits 'typing', show the typing message
   socket.on('typing', (data) => {
 
-    if ($('.messageBody').attr('data-uid') == data.username && $('.messageBody').text() == 'is typing') {
-      return;
+    if ($('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').length>-1) {
+      return ;
     }
 
     addChatTyping(data);
