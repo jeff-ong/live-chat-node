@@ -83,4 +83,19 @@ io.on('connection', (socket) => {
       });
     }
   });
+
+
+  // Accept a login event with user's data
+  socket.on('login', function (userdata) {
+    cnosole.log(userdata)
+    socket.handshake.session.userdata = userdata;
+    socket.handshake.session.save();
+  });
+
+  socket.on('logout', function (userdata) {
+    if (socket.handshake.session.userdata) {
+      delete socket.handshake.session.userdata;
+      socket.handshake.session.save();
+    }
+  });
 });
