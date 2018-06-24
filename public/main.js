@@ -263,6 +263,10 @@ $(function() {
       return ;
     }
 
+    window.setTimeout(function(){
+      $('.messageBody[data-uid="' + data.username + '"]:contains("is typing")').parent().remove();
+    },3000);
+
     addChatTyping(data);
   });
 
