@@ -259,7 +259,7 @@ $(function() {
   // Whenever the server emits 'typing', show the typing message
   socket.on('typing', (data) => {
 
-    if ($('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').length>=0) {
+    if ($('.messageBody[data-uid="'+data.username+'"]:contains("is typing")').length>0) {
       return ;
     }
 
