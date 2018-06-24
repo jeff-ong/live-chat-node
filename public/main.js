@@ -103,6 +103,11 @@ $(function() {
   const addChatTyping = (data) => {
     data.typing = true;
     data.message = 'is typing';
+
+    if ($('.messageBody').attr('data-uid') == data.username && $('.messageBody').text() =='is typing') {
+      return;
+    }
+
     addChatMessage(data);
   }
 
