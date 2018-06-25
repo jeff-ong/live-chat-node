@@ -1,5 +1,5 @@
 
-# Live Chat Node Application
+# LiveChat Node Application
 This simple application let you create disposable live chat sessions. It is developed with Node, Express, and Socket.io.
 
 [Live demo](https://shielded-spire-23012.herokuapp.com/)
